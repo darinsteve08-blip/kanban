@@ -39,6 +39,11 @@ export default function App() {
     setTasks(tasks.filter((t) => t.id !== id));
   }
  
+  // Reto 3: eliminar todas las tareas que tengan status === "done"
+  function clearDoneTasks() {
+    setTasks(tasks.filter((t) => t.status !== "done"));
+  }
+ 
   return (
     <main>
       {/* Reto Clase 1: total de tareas (ahora se actualiza solo al agregar/eliminar) */}
@@ -48,10 +53,12 @@ export default function App() {
         {COLUMNS.map((c) => (
           <Column
             key={c.id}
+            id={c.id}
             title={c.title}
             tasks={tasks.filter((t) => t.status === c.id)}
             onMove={moveTask}
             onRemove={removeTask}
+            onClearDone={c.id === "done" ? clearDoneTasks : undefined}
           />
         ))}
       </div>

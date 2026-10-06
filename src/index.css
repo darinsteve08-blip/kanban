@@ -13,3 +13,7 @@ main { max-width: 1000px; margin: auto; padding: 24px; }
 button, select { padding: 6px 10px; border-radius: 6px; border: 1px solid #d1d5db; background: #fff; cursor: pointer; }
 .card-actions { display: flex; justify-content: space-between; gap: 8px; margin-top: 4px; }
 .form-error { color: #dc2626; margin: -8px 0 16px; font-size: 0.9rem; }
+.column-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.column-header h2 { margin: 0; }
+.btn-clear { font-size: 0.75rem; padding: 4px 6px; background: #fee2e2; border: 1px solid #fca5a5; color: #991b1b; }
+.btn-clear:hover { background: #fecaca; }
