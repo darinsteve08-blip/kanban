@@ -11,7 +11,11 @@ export default function TaskForm({ onAdd }) {
       setError("El título no puede estar vacío");
       return;
     }
-    onAdd(title.trim(), priority);
+    const addError = onAdd(title.trim(), priority);
+    if (addError) {
+      setError(addError);
+      return;
+    }
     setTitle("");
     setError("");
   }

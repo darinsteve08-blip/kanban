@@ -18,8 +18,15 @@ export default function App() {
   const [tasks, setTasks] = useState(initialTasks);
  
   function addTask(title, priority) {
+    const exists = tasks.some(
+      (t) => t.title.trim().toLowerCase() === title.trim().toLowerCase()
+    );
+    if (exists) {
+      return "Ya existe una tarea con ese título";
+    }
     const newTask = { id: Date.now(), title, status: "todo", priority };
     setTasks([...tasks, newTask]);
+    return null;
   }
  
   function moveTask(id, newStatus) {
