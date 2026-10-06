@@ -1,0 +1,10 @@
+body { margin: 0; font-family: system-ui, sans-serif; background: #f3f4f6; color: #1f2937; }
+main { max-width: 1000px; margin: auto; padding: 24px; }
+.board { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+.column { background: #e5e7eb; padding: 12px; border-radius: 8px; }
+.column h2 { font-size: 1rem; margin-top: 0; }
+.card { background: #fff; padding: 10px; border-radius: 6px; margin-bottom: 8px;
+        border-left: 4px solid #9ca3af; display: grid; gap: 4px; }
+.prio-alta { border-color: #dc2626; }
+.prio-media { border-color: #f59e0b; }
+.prio-baja { border-color: #16a34a; }

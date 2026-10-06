@@ -1,0 +1,13 @@
+import TaskCard from "./TaskCard";
+ 
+export default function Column({ title, tasks }) {
+  return (
+    <section className="column">
+      <h2>{title} ({tasks.length})</h2>
+      {tasks.length === 0 && <p>Sin tareas</p>}
+      {tasks.map((t) => (
+        <TaskCard key={t.id} title={t.title} priority={t.priority} />
+      ))}
+    </section>
+  );
+}
