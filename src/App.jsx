@@ -1,39 +1,53 @@
+import { useState } from "react";
 import Column from "./components/Column";
+import TaskForm from "./components/TaskForm";
+import { COLUMNS } from "./columns";
  
-const COLUMNS = [
-  { id: "todo", title: "Por hacer" },
-  { id: "doing", title: "En progreso" },
-  { id: "review", title: "Revisión" }, // Reto 3: nueva columna
-  { id: "done", title: "Hecho" },
-];
- 
-const tasks = [
+// Valor inicial del estado (incluye las tareas agregadas en los retos de la Clase 1)
+const initialTasks = [
   { id: 1, title: "Diseñar la base de datos", status: "done", priority: "alta" },
-  // Reto 2: antes estaba en "doing", ahora se mueve a "Revisión"
   { id: 2, title: "Crear el login", status: "review", priority: "media" },
   { id: 3, title: "Escribir pruebas", status: "todo", priority: "baja" },
   { id: 4, title: "Preparar la demo", status: "todo", priority: "alta" },
-  // Reto 1: 3 tareas nuevas
   { id: 5, title: "Configurar el despliegue", status: "todo", priority: "media" },
   { id: 6, title: "Maquetar el dashboard", status: "doing", priority: "alta" },
   { id: 7, title: "Documentar la API", status: "done", priority: "baja" },
 ];
  
 export default function App() {
+  const [tasks, setTasks] = useState(initialTasks);
+ 
+  function addTask(title, priority) {
+    const newTask = { id: Date.now(), title, status: "todo", priority };
+    setTasks([...tasks, newTask]);
+  }
+ 
+  function moveTask(id, newStatus) {
+    setTasks(
+      tasks.map((t) => (t.id === id ? { ...t, status: newStatus } : t))
+    );
+  }
+ 
+  function removeTask(id) {
+    setTasks(tasks.filter((t) => t.id !== id));
+  }
+ 
   return (
     <main>
-      {/* Reto 4: total de tareas en el título */}
+      {/* Reto Clase 1: total de tareas (ahora se actualiza solo al agregar/eliminar) */}
       <h1>Kanban ({tasks.length} tareas)</h1>
+      <TaskForm onAdd={addTask} />
       <div className="board">
         {COLUMNS.map((c) => (
           <Column
             key={c.id}
             title={c.title}
             tasks={tasks.filter((t) => t.status === c.id)}
+            onMove={moveTask}
+            onRemove={removeTask}
           />
         ))}
       </div>
     </main>
   );
 }
-
