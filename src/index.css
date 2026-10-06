@@ -17,3 +17,6 @@ button, select { padding: 6px 10px; border-radius: 6px; border: 1px solid #d1d5d
 .column-header h2 { margin: 0; }
 .btn-clear { font-size: 0.75rem; padding: 4px 6px; background: #fee2e2; border: 1px solid #fca5a5; color: #991b1b; }
 .btn-clear:hover { background: #fecaca; }
+.card-title { cursor: pointer; user-select: none; }
+.card-title:hover { text-decoration: underline dotted #4b5563; }
+.edit-input { font-size: 1rem; font-weight: bold; font-family: inherit; padding: 4px; border: 1px solid #3b82f6; border-radius: 4px; width: 100%; box-sizing: border-box; }

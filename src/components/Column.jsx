@@ -1,6 +1,6 @@
 import TaskCard from "./TaskCard";
  
-export default function Column({ title, tasks, onMove, onRemove, onClearDone }) {
+export default function Column({ title, tasks, onMove, onRemove, onEdit, onClearDone }) {
   return (
     <section className="column">
       <div className="column-header">
@@ -13,7 +13,13 @@ export default function Column({ title, tasks, onMove, onRemove, onClearDone }) 
       </div>
       {tasks.length === 0 && <p>Sin tareas</p>}
       {tasks.map((t) => (
-        <TaskCard key={t.id} task={t} onMove={onMove} onRemove={onRemove} />
+        <TaskCard
+          key={t.id}
+          task={t}
+          onMove={onMove}
+          onRemove={onRemove}
+          onEdit={onEdit}
+        />
       ))}
     </section>
   );

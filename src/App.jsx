@@ -39,6 +39,13 @@ export default function App() {
     setTasks(tasks.filter((t) => t.id !== id));
   }
  
+  // Reto 4: editar el título de una tarea
+  function editTask(id, newTitle) {
+    setTasks(
+      tasks.map((t) => (t.id === id ? { ...t, title: newTitle } : t))
+    );
+  }
+ 
   // Reto 3: eliminar todas las tareas que tengan status === "done"
   function clearDoneTasks() {
     setTasks(tasks.filter((t) => t.status !== "done"));
@@ -58,6 +65,7 @@ export default function App() {
             tasks={tasks.filter((t) => t.status === c.id)}
             onMove={moveTask}
             onRemove={removeTask}
+            onEdit={editTask}
             onClearDone={c.id === "done" ? clearDoneTasks : undefined}
           />
         ))}
