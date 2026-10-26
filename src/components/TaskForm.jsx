@@ -1,17 +1,19 @@
 import { useState } from "react";
- 
-export default function TaskForm({ onAdd }) {
+import { useBoard } from "../context/BoardContext";
+
+export default function TaskForm() {
+  const { addTask } = useBoard();
   const [title, setTitle] = useState("");
   const [priority, setPriority] = useState("media");
-  const [error, setError] = useState(""); // Reto 1: mensaje de error
- 
+  const [error, setError] = useState("");
+
   function handleSubmit(e) {
     e.preventDefault();
     if (title.trim() === "") {
       setError("El título no puede estar vacío");
       return;
     }
-    const addError = onAdd(title.trim(), priority);
+    const addError = addTask(title.trim(), priority);
     if (addError) {
       setError(addError);
       return;
@@ -19,7 +21,7 @@ export default function TaskForm({ onAdd }) {
     setTitle("");
     setError("");
   }
- 
+
   return (
     <>
       <form className="task-form" onSubmit={handleSubmit}>
@@ -27,7 +29,7 @@ export default function TaskForm({ onAdd }) {
           value={title}
           onChange={(e) => {
             setTitle(e.target.value);
-            setError(""); // al escribir, el error desaparece
+            setError("");
           }}
           placeholder="Nueva tarea..."
         />

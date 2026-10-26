@@ -1,20 +1,21 @@
 import { useState } from "react";
 import { COLUMNS } from "../columns";
- 
-export default function TaskCard({ task, onMove, onRemove, onEdit }) {
-  // Reto 4: modo edición con doble clic
+import { useBoard } from "../context/BoardContext";
+
+export default function TaskCard({ task }) {
+  const { moveTask, removeTask, editTask } = useBoard();
   const [isEditing, setIsEditing] = useState(false);
   const [editTitle, setEditTitle] = useState(task.title);
- 
+
   function handleSave() {
     if (editTitle.trim() !== "") {
-      onEdit(task.id, editTitle.trim());
+      editTask(task.id, editTitle.trim());
     } else {
-      setEditTitle(task.title); // restaurar si lo dejó vacío
+      setEditTitle(task.title);
     }
     setIsEditing(false);
   }
- 
+
   function handleKeyDown(e) {
     if (e.key === "Enter") {
       handleSave();
@@ -23,7 +24,7 @@ export default function TaskCard({ task, onMove, onRemove, onEdit }) {
       setIsEditing(false);
     }
   }
- 
+
   return (
     <article className={`card prio-${task.priority}`}>
       {isEditing ? (
@@ -48,13 +49,13 @@ export default function TaskCard({ task, onMove, onRemove, onEdit }) {
       <div className="card-actions">
         <select
           value={task.status}
-          onChange={(e) => onMove(task.id, e.target.value)}
+          onChange={(e) => moveTask(task.id, e.target.value)}
         >
           {COLUMNS.map((c) => (
             <option key={c.id} value={c.id}>{c.title}</option>
           ))}
         </select>
-        <button onClick={() => onRemove(task.id)}>Eliminar</button>
+        <button onClick={() => removeTask(task.id)}>Eliminar</button>
       </div>
     </article>
   );

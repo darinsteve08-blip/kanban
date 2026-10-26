@@ -1,25 +1,22 @@
 import TaskCard from "./TaskCard";
- 
-export default function Column({ title, tasks, onMove, onRemove, onEdit, onClearDone }) {
+import { useBoard } from "../context/BoardContext";
+
+export default function Column({ id, title, tasks }) {
+  const { clearDoneTasks } = useBoard();
+
   return (
     <section className="column">
       <div className="column-header">
         <h2>{title} ({tasks.length})</h2>
-        {onClearDone && tasks.length > 0 && (
-          <button className="btn-clear" onClick={onClearDone}>
+        {id === "done" && tasks.length > 0 && (
+          <button className="btn-clear" onClick={clearDoneTasks}>
             Vaciar columna
           </button>
         )}
       </div>
       {tasks.length === 0 && <p>Sin tareas</p>}
       {tasks.map((t) => (
-        <TaskCard
-          key={t.id}
-          task={t}
-          onMove={onMove}
-          onRemove={onRemove}
-          onEdit={onEdit}
-        />
+        <TaskCard key={t.id} task={t} />
       ))}
     </section>
   );

@@ -20,3 +20,18 @@ button, select { padding: 6px 10px; border-radius: 6px; border: 1px solid #d1d5d
 .card-title { cursor: pointer; user-select: none; }
 .card-title:hover { text-decoration: underline dotted #4b5563; }
 .edit-input { font-size: 1rem; font-weight: bold; font-family: inherit; padding: 4px; border: 1px solid #3b82f6; border-radius: 4px; width: 100%; box-sizing: border-box; }
+.search {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+.error {
+  background: #fee2e2;
+  color: #991b1b;
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+}
