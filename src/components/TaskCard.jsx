@@ -1,50 +1,15 @@
-import { useState } from "react";
+import { Link } from "react-router-dom";
 import { COLUMNS } from "../columns";
 import { useBoard } from "../context/BoardContext";
 
 export default function TaskCard({ task }) {
-  const { moveTask, removeTask, editTask } = useBoard();
-  const [isEditing, setIsEditing] = useState(false);
-  const [editTitle, setEditTitle] = useState(task.title);
-
-  function handleSave() {
-    if (editTitle.trim() !== "") {
-      editTask(task.id, editTitle.trim());
-    } else {
-      setEditTitle(task.title);
-    }
-    setIsEditing(false);
-  }
-
-  function handleKeyDown(e) {
-    if (e.key === "Enter") {
-      handleSave();
-    } else if (e.key === "Escape") {
-      setEditTitle(task.title);
-      setIsEditing(false);
-    }
-  }
+  const { moveTask, removeTask } = useBoard();
 
   return (
     <article className={`card prio-${task.priority}`}>
-      {isEditing ? (
-        <input
-          className="edit-input"
-          value={editTitle}
-          autoFocus
-          onChange={(e) => setEditTitle(e.target.value)}
-          onBlur={handleSave}
-          onKeyDown={handleKeyDown}
-        />
-      ) : (
-        <strong
-          onDoubleClick={() => setIsEditing(true)}
-          title="Doble clic para editar el título"
-          className="card-title"
-        >
-          {task.title}
-        </strong>
-      )}
+      <strong>
+        <Link to={`/tarea/${task.id}`}>{task.title}</Link>
+      </strong>
       <small>Prioridad: {task.priority}</small>
       <div className="card-actions">
         <select

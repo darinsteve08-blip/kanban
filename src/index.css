@@ -35,3 +35,13 @@ button, select { padding: 6px 10px; border-radius: 6px; border: 1px solid #d1d5d
   border-radius: 6px;
   margin-bottom: 12px;
 }
+
+.topbar { display: flex; justify-content: space-between; align-items: center; padding: 12px 24px; background: #1e3a8a; color: #fff; }
+.topbar h1 { margin: 0; font-size: 1.2rem; }
+.topbar nav a { color: #bfdbfe; margin-left: 16px; text-decoration: none; padding-bottom: 2px; }
+.topbar nav a.active { color: #fff; font-weight: 700; border-bottom: 2px solid #fff; }
+.card a { color: inherit; text-decoration: none; }
+.card a:hover { text-decoration: underline; }
+.bar { background: #d1d5db; height: 14px; border-radius: 7px; overflow: hidden; margin: 12px 0; }
+.bar div { background: #16a34a; height: 100%; transition: width 0.3s ease; }
+.detail { display: grid; gap: 10px; max-width: 480px; }

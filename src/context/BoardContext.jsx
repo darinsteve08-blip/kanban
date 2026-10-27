@@ -45,10 +45,10 @@ export function BoardProvider({ children }) {
       setError(null);
       const task = await api.createTask(title, priority);
       dispatch({ type: "add", task });
-      return null;
+      return true;
     } catch (err) {
       setError(err.message);
-      return err.message;
+      return false;
     }
   }
 
@@ -57,8 +57,10 @@ export function BoardProvider({ children }) {
       setError(null);
       await api.updateStatus(id, status);
       dispatch({ type: "move", id, status });
+      return true;
     } catch (err) {
       setError(err.message);
+      return false;
     }
   }
 
@@ -67,8 +69,10 @@ export function BoardProvider({ children }) {
       setError(null);
       await api.updateTitle(id, title);
       dispatch({ type: "edit", id, title });
+      return true;
     } catch (err) {
       setError(err.message);
+      return false;
     }
   }
 
@@ -77,8 +81,10 @@ export function BoardProvider({ children }) {
       setError(null);
       await api.deleteTask(id);
       dispatch({ type: "remove", id });
+      return true;
     } catch (err) {
       setError(err.message);
+      return false;
     }
   }
 
@@ -87,8 +93,10 @@ export function BoardProvider({ children }) {
       setError(null);
       await api.clearDone();
       dispatch({ type: "clearDone" });
+      return true;
     } catch (err) {
       setError(err.message);
+      return false;
     }
   }
 
