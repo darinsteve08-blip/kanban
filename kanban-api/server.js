@@ -3,15 +3,16 @@ import cors from "cors";
 import mysql from "mysql2/promise";
 
 const app = express();
-app.use(cors());
+app.use(cors({ origin: process.env.CORS_ORIGIN ?? "*" }));
 app.use(express.json());
 
-// Conexión a la base de datos en XAMPP
+// Conexión a la base de datos con variables de entorno
 const pool = mysql.createPool({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "kanban_db",
+  host: process.env.DB_HOST ?? "localhost",
+  port: Number(process.env.DB_PORT ?? 3306),
+  user: process.env.DB_USER ?? "root",
+  password: process.env.DB_PASSWORD ?? "",
+  database: process.env.DB_NAME ?? "kanban_db",
 });
 
 const STATUS = ["todo", "doing", "review", "done"];
@@ -81,22 +82,25 @@ app.patch(
   })
 );
 
-// 4. EDITAR TÍTULO DE LA TAREA (PUT)
+// 4. EDITAR TÍTULO Y PRIORIDAD DE LA TAREA (PUT)
 app.put(
   "/api/tasks/:id",
   handle(async (req, res) => {
-    const { title } = req.body;
+    const { title, priority } = req.body;
     if (!title || !title.trim()) {
-      return res.status(400).json({ error: "El título no puede estar vacío" });
+      return res.status(400).json({ error: "El título es obligatorio" });
+    }
+    if (!PRIORITY.includes(priority)) {
+      return res.status(400).json({ error: "Prioridad no válida" });
     }
     const [result] = await pool.query(
-      "UPDATE tasks SET title = ? WHERE id = ?",
-      [title.trim(), req.params.id]
+      "UPDATE tasks SET title = ?, priority = ? WHERE id = ?",
+      [title.trim(), priority, req.params.id]
     );
     if (result.affectedRows === 0) {
       return res.status(404).json({ error: "Tarea no encontrada" });
     }
-    res.json({ id: Number(req.params.id), title: title.trim() });
+    res.json({ id: Number(req.params.id), title: title.trim(), priority });
   })
 );
 
@@ -123,4 +127,5 @@ app.delete(
   })
 );
 
-app.listen(3001, () => console.log("API corriendo en http://localhost:3001"));
+const PORT = process.env.PORT ?? 3001;
+app.listen(PORT, () => console.log(`API en http://localhost:${PORT}`));

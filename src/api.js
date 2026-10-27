@@ -1,4 +1,4 @@
-const API = "http://localhost:3001/api/tasks";
+const API = `${import.meta.env.VITE_API_URL ?? "http://localhost:3001"}/api/tasks`;
 
 async function request(url, options) {
   let res;
@@ -32,11 +32,11 @@ export const updateStatus = (id, status) =>
     body: JSON.stringify({ status }),
   });
 
-export const updateTitle = (id, title) =>
+export const updateTask = (id, title, priority) =>
   request(`${API}/${id}`, {
     method: "PUT",
     headers: JSON_HEADERS,
-    body: JSON.stringify({ title }),
+    body: JSON.stringify({ title, priority }),
   });
 
 export const deleteTask = (id) => request(`${API}/${id}`, { method: "DELETE" });

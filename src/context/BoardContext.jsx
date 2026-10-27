@@ -1,30 +1,8 @@
 import { createContext, useContext, useEffect, useReducer, useState } from "react";
 import * as api from "../api";
+import { reducer } from "./boardReducer";
 
 const BoardContext = createContext(null);
-
-function reducer(state, action) {
-  switch (action.type) {
-    case "set":
-      return action.tasks;
-    case "add":
-      return [...state, action.task];
-    case "move":
-      return state.map((t) =>
-        t.id === action.id ? { ...t, status: action.status } : t
-      );
-    case "edit":
-      return state.map((t) =>
-        t.id === action.id ? { ...t, title: action.title } : t
-      );
-    case "remove":
-      return state.filter((t) => t.id !== action.id);
-    case "clearDone":
-      return state.filter((t) => t.status !== "done");
-    default:
-      return state;
-  }
-}
 
 export function BoardProvider({ children }) {
   const [tasks, dispatch] = useReducer(reducer, []);
@@ -64,11 +42,11 @@ export function BoardProvider({ children }) {
     }
   }
 
-  async function editTask(id, title) {
+  async function editTask(id, title, priority) {
     try {
       setError(null);
-      await api.updateTitle(id, title);
-      dispatch({ type: "edit", id, title });
+      await api.updateTask(id, title, priority);
+      dispatch({ type: "edit", id, title, priority });
       return true;
     } catch (err) {
       setError(err.message);
